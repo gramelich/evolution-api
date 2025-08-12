@@ -3,7 +3,7 @@ FROM node:20-alpine AS builder
 
 # Instala dependências do sistema
 RUN apk update && \
-    apk add --no-cache git ffmpeg wget curl bash tzdata
+    apk add --no-cache git ffmpeg wget curl bash tzdata dos2unix
 
 # Define variáveis de ambiente
 ENV TZ=America/Sao_Paulo
@@ -19,8 +19,8 @@ WORKDIR /evolution
 # Copia arquivos de configuração e dependências
 COPY package.json tsconfig.json ./
 
-# Instala as dependências do projeto
-RUN npm install
+# Instala as dependências do projeto com flags para resolver conflitos
+RUN npm install --legacy-peer-deps
 
 # Copia o código fonte e outros arquivos necessários
 COPY ./src ./src
@@ -47,7 +47,7 @@ FROM node:20-alpine AS final
 
 # Instala dependências do sistema
 RUN apk update && \
-    apk add --no-cache tzdata ffmpeg bash
+    apk add --no-cache tzdata ffmpeg bash dos2unix
 
 # Define variáveis de ambiente
 ENV TZ=America/Sao_Paulo
