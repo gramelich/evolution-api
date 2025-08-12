@@ -3,7 +3,7 @@ FROM node:20-alpine AS builder
 
 # Instala dependências do sistema
 RUN apk update && \
-    apk add --no-cache git ffmpeg wget curl bash tzdata dos2unix
+    apk add --no-cache git ffmpeg wget curl bash tzdata dos2unix openssl openssl-dev
 
 # Define variáveis de ambiente
 ENV TZ=America/Sao_Paulo
@@ -52,7 +52,7 @@ FROM node:20-alpine AS final
 
 # Instala dependências do sistema
 RUN apk update && \
-    apk add --no-cache tzdata ffmpeg bash dos2unix
+    apk add --no-cache tzdata ffmpeg bash dos2unix openssl openssl-dev
 
 # Define variáveis de ambiente
 ENV TZ=America/Sao_Paulo
